@@ -284,50 +284,55 @@ downloadButton.addEventListener("click", function () {
   }
 });
 
-imageFileInput.addEventListener("change", function () {
-  var file = imageFileInput.files[0];
-  var reader = new FileReader();
-  reader.onloadend = function () {
-    certImage.src = reader.result;
-  };
-  if (file) {
-    reader.readAsDataURL(file);
-  } else {
-    certImage.src = defaultCertPNG;
-  }
-});
 
 addInputButton.addEventListener("click", function () {
   addField();
 });
 
+
 function addField(text = "Field Name", position = [20, 20], editable = true) {
+  var existingFields = Inputs.querySelectorAll(".certinputs");
+  var newY = 30 + (existingFields.length * 10); // Adjust the increment (10) as needed
+  var newPosition;
+  if (existingFields.length === 0) {
+    // Adjust the vertical position of the first column
+    newY -= 5; // Lift the first column input
+    newPosition = [45, newY];
+  } 
+  else {
+    newPosition = [45, newY + 10]; // Bring down the last column input by increasing the newY
+  }
   var data = `
- <div>
- <input type="checkbox"  class="certcheck" />
- <input
-   type="text"
-   value="${text}"
-   data-fontsize="5"
-   data-font="'Open Sans', sans-serif"
-   data-textalign="left"
-   data-x="${position[0]}"
-   data-y="${position[1]}"
-   data-color="#000"
-   data-opacity="80"
-   class="certinputs"
-   data-bold="0"
-   data-italic="0"
-   data-editable="${editable ? "1" : "0"}"
-   ${editable ? "" : "disabled"}
- />
- <button class="delbutton"><i class="fa fa-trash"></i></button>
-</div>
- `;
+    <div>
+      <input type="checkbox" class="certcheck" />
+      <input
+        type="text"
+        value="${text}"
+        data-fontsize="5"
+        data-font="'Open Sans', sans-serif"
+        data-textalign="center"
+        data-x="${newPosition[0]}" // Updated position value
+        data-y="${newPosition[1]}"
+        data-color="#000"
+        data-opacity="80"
+        class="certinputs"
+        data-bold="0"
+        data-italic="0"
+        data-editable="${editable ? "1" : "0"}"
+        ${editable ? "" : "disabled"}
+      />
+      <button class="delbutton"><i class="fa fa-trash"></i></button>
+    </div>
+  `;
   Inputs.innerHTML += data;
   addListenerToInputs();
   drawTextfromInputs();
 }
+
+
+
+
+
 
 Editor.fontsize.addEventListener("change", function () {
   updateDataset("fontsize", this.value);
@@ -383,24 +388,9 @@ function updateDataset(dataname, value, mode = "w") {
   drawTextfromInputs();
 }
 
-let myStick = new JoystickController("stick", 64, 8);
-function loop() {
-  requestAnimationFrame(loop);
-  // Get current values
-  let x = myStick.value.x;
-  let y = myStick.value.y;
-  if (!(x == 0 && y == 0)) {
-    if (Math.abs(x - prevX) > 0.1) {
-      prevX = x;
-      updateDataset("x", x * 10, "a");
-    }
-    if (Math.abs(y - prevY) > 0.1) {
-      prevY = y;
-      updateDataset("y", y * 10, "a");
-    }
-  }
-}
-loop();
+
+
+
 //  On Window Resize event
 window.addEventListener("resize", function () {
   canvasOffset = canvas.getBoundingClientRect();
@@ -537,6 +527,7 @@ function importFile(evt) {
       console.log(sheetData);
 
       Inputs.innerHTML = "";
+      
       document.querySelector(".downloadzip").style.display = "flex";
       // document.querySelector(".downloadzip").href = "data:text/csv;charset=utf-8," + encodeURIComponent(data.map(row => titles.map(field => row[field]).join(",")).join("\n"));
       document.querySelector(".downloadfile").style.display = "none";
@@ -585,11 +576,11 @@ downloadZipButton.addEventListener("click", function (e) {
   var zip = new JSZip();
   var count = 0;
   var totalRows = sheetData.length;
-  var zipFilename = "CERRT_SemiKolan.zip";
+  var zipFilename = "CERTIFICATE.zip";
   var effectiveDOMs = [];
   var dataIndex = [];
   Inputs.querySelectorAll(".certinputs").forEach(function (input) {
-    // console.log("input", input);
+    console.log("input", input);
     if (titles.includes(input.value)) {
       input.dataset.editable = "1";
       effectiveDOMs.push(input);
@@ -597,6 +588,7 @@ downloadZipButton.addEventListener("click", function (e) {
     }
   });
 
+ 
   sheetData.forEach(function (row, i) {
     effectiveDOMs.forEach(function (dom, j) {
       dom.value = row[dataIndex[j]];
@@ -640,23 +632,3 @@ downloadZipButton.addEventListener("click", function (e) {
 
   // loaderbody.style.display = "none";
 });
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}

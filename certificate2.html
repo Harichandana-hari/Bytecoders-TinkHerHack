@@ -11,11 +11,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
 
-    <!-- <script src="vendor/joystick.js"></script> -->
   </head>
   <body>
     <header>
-      <h1>Certificate Generator</h1>
+      <h1>Certificate Editor</h1>
     </header>
     <main id="main">
       <div class="toolscontainer">
@@ -54,16 +53,7 @@
           <button id="textbold" class="formattool" data-active="0">B</button>
           <button id="textitalic" class="formattool" data-active="0">I</button>
           <input type="color" id="textcolor" />
-          <div class="slidecontainer">
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value="80"
-              class="slider"
-              id="textopacity"
-            />
-          </div>
+          
         </div>
       </div>
 
@@ -91,15 +81,6 @@
           </div>
         <div id="asidebar">
 
-            <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Choose a template</button>
-                <div id="myDropdown" class="dropdown-content">
-                  <a href="#">Template 1</a>
-                  <a href="#">Template 2</a>
-                  <a href="#">Template 3</a>
-                </div>
-            </div>
-
 
           <div id="editor"></div>
 
@@ -115,16 +96,7 @@
                 accept=".csv,application/vnd.ms-excel,.xlt,application/vnd.ms-excel,.xla,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xltx,application/vnd.openxmlformats-officedocument.spreadsheetml.template,.xlsm,application/vnd.ms-excel.sheet.macroEnabled.12,.xltm,application/vnd.ms-excel.template.macroEnabled.12,.xlam,application/vnd.ms-excel.addin.macroEnabled.12,.xlsb,application/vnd.ms-excel.sheet.binary.macroEnabled.12"
               />
             </label>
-            <label class="button uploadlabel">
-              Upload Cerrt
-              <input
-                id="uploadimage"
-                type="file"
-                class="button"
-                value="Upload Image"
-                accept="image/*"
-              />
-            </label>
+            
           </div>
           <div id="inputs">
             <div>
@@ -182,10 +154,7 @@
               />
               <button class="delbutton"><i class="fa fa-trash"></i></button>
             </div>
-          </div>
-
-
-          
+        </div>
 
 
           <div class="optionscontainer">
@@ -209,6 +178,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script2.js"></script>
   </body>
 </html>
